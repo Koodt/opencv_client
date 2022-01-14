@@ -1,0 +1,12 @@
+global:
+  reconnect_time: 1
+  capture_duration: 600
+  logfile: '/opencv/logs/opencv.log'
+devices:
+  camera1:
+    protocol: 'rtsp'
+    user: 'USER'
+    password: 'PWD'
+    ip_address: 'IP_ADDRESS'
+    port: 'PORT'
+    path: 'PATH_TO_STREAM'
