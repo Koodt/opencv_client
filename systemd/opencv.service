@@ -1,0 +1,6 @@
+[Service]
+ExecStart=/opencv/main.py
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
