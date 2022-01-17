@@ -7,12 +7,21 @@ import datetime
 import logging
 import logging.handlers
 import signal
+import sys
+import os
 
-# Variables
-with open('config.yaml', 'r') as f:
-    options = yaml.load(f, Loader=yaml.SafeLoader)
+# Load config file
+try:
+    with open('config.yaml', 'r') as f:
+        options = yaml.load(f, Loader=yaml.SafeLoader)
+except OSError as exception:
+    print(exception)
+    sys.exit()
 
+
+# Set variables
 logName = options["global"]["logfile"]
+output_dir = options["global"]["output_dir"]
 reconnect_time = options["global"]["reconnect_time"]
 capture_duration = options["global"]["capture_duration"]
 
@@ -31,6 +40,11 @@ logger.addHandler(rotateHandler)
 
 logger.info('Program start')
 
+# Check variables
+if not os.path.exists(output_dir):
+    logger.warning('%s not exist', output_dir)
+    logger.info('Graceful exit')
+    sys.exit()
 class GracefulKiller:
     kill_now = False
 
@@ -68,7 +82,7 @@ while not killer.kill_now:
 
         now = datetime.datetime.now()
         start_time = int(time.time())
-        fileName = '/opencv/output/' + now.strftime('%Y_%m_%d_%H_%M_%S') + '.avi'
+        fileName = output_dir + now.strftime('%Y_%m_%d_%H_%M_%S') + '.avi'
         out = cv2.VideoWriter(fileName,fourcc, 4.0, (1920,1080))
         logger.info('Record started')
 

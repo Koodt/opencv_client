@@ -125,4 +125,8 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
+# Custom
 /config.yaml
+
+# Opencv
+*.avi
