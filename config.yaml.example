@@ -1,7 +1,8 @@
 global:
   reconnect_time: 1
   capture_duration: 600
-  logfile: '/opencv/logs/opencv.log'
+  logfile: '/opencv_client/logs/opencv.log'
+  output_dir: '/opencv_client/output/'
 devices:
   camera1:
     protocol: 'rtsp'

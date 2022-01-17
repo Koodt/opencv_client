@@ -12,7 +12,7 @@ import os
 
 # Load config file
 try:
-    with open('config.yaml', 'r') as f:
+    with open('/opencv_client/config.yaml', 'r') as f:
         options = yaml.load(f, Loader=yaml.SafeLoader)
 except OSError as exception:
     print(exception)
@@ -42,9 +42,11 @@ logger.info('Program start')
 
 # Check variables
 if not os.path.exists(output_dir):
+    print(output_dir, 'not exist')
     logger.warning('%s not exist', output_dir)
     logger.info('Graceful exit')
     sys.exit()
+
 class GracefulKiller:
     kill_now = False
 
