@@ -18,7 +18,6 @@ except OSError as exception:
     print(exception)
     sys.exit()
 
-
 # Set variables
 logName = options["global"]["logfile"]
 output_dir = options["global"]["output_dir"]
@@ -82,21 +81,22 @@ while not killer.kill_now:
                 logger.info('Camera opened after awaiting!')
             logger.info('Camera connect success')
 
-        now = datetime.datetime.now()
-        start_time = int(time.time())
-        fileName = output_dir + now.strftime('%Y_%m_%d_%H_%M_%S') + '.avi'
-        out = cv2.VideoWriter(fileName,fourcc, 4.0, (1920,1080))
-        logger.info('Record started')
+        while not killer.kill_now:
+            now = datetime.datetime.now()
+            start_time = int(time.time())
+            fileName = output_dir + now.strftime('%Y_%m_%d_%H_%M_%S') + '.avi'
+            out = cv2.VideoWriter(fileName,fourcc, 4.0, (1920,1080))
+            logger.info('Record started')
 
-        while( ( int(time.time() - start_time ) < capture_duration) and not killer.kill_now ):
-            ret, frame = cap.read()
-            if ret==True:
-                out.write(frame)
-            else:
-                break
+            while( ( int(time.time() - start_time ) < capture_duration) and not killer.kill_now ):
+                ret, frame = cap.read()
+                if ret==True:
+                    out.write(frame)
+                else:
+                    break
 
-        out.release()
-        logger.info('Record ended')
+            out.release()
+            logger.info('Record ended')
     except ConnectionError:
         print("Retrying connection to camera in ",str(reconnect_time), " seconds...")
         logger.warning('Connection error. Wait for reconnection.')
