@@ -88,7 +88,7 @@ while not killer.kill_now:
             out = cv2.VideoWriter(fileName,fourcc, 4.0, (1920,1080))
             logger.info('Record started')
 
-            while( ( int(time.time() - start_time ) < capture_duration) and not killer.kill_now ):
+            while( ( int(time.time() - start_time ) < capture_duration) or not killer.kill_now or cap is None or not cap.isOpened()):
                 ret, frame = cap.read()
                 if ret==True:
                     out.write(frame)
